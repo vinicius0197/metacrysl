@@ -1,0 +1,12 @@
+grammar org.Crysl with org.eclipse.xtext.common.Terminals
+
+generate crysl "http://www.Crysl.org"
+
+Model: entities += Entity*;
+Entity:
+'entity' name = ID ('extends' superType=[Entity])? '{'
+attributes += Attribute*
+'}'
+;
+Attribute:
+type=[Entity] array?=('[]')? name=ID ';' ;

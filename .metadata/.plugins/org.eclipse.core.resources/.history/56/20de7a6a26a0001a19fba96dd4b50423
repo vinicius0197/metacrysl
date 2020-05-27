@@ -1,0 +1,13 @@
+grammar org.Crysl with org.eclipse.xtext.common.Terminals
+
+generate crysl "http://www.Crysl.org"
+
+RULESET:(elements+=Type)*;
+
+Type:
+	SPEC
+;
+
+SPEC:
+	
+;

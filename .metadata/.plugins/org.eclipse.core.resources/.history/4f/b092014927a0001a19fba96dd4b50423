@@ -1,0 +1,21 @@
+grammar org.Crysl with org.eclipse.xtext.common.Terminals
+
+generate crysl "http://www.Crysl.org"
+
+RULESET:(elements+=Type)*;
+
+Type:
+	SPEC
+;
+
+SPEC:
+	"SPEC" qualifiedName=ID ";"
+;
+
+OBJECTS:
+	"OBJECTS" (objects+=objectType)*
+;
+
+objectType:
+	qualifiedName=ID objectType=ID ";"
+;
