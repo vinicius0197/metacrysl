@@ -1,0 +1,50 @@
+grammar org.Crysl with org.eclipse.xtext.common.Terminals
+
+generate crysl "http://www.Crysl.org"
+
+RULESET:(elements+=Type)*;
+
+Type:
+	SPEC | OBJECTS | EVENTS | ORDER | CONSTRAINTS
+;
+
+SPEC:
+	"SPEC" QualifiedName ";"
+;
+
+QualifiedName:
+	qualifiedName = ID | {QualifiedName} qualifiedName = ID "." subName=QualifiedName
+;
+
+OBJECTS:
+	{OBJECTS} "OBJECTS\n" (objects+=objectType)*
+;
+
+objectType:
+	QualifiedName objectType=ID ";"
+;
+
+EVENTS:
+	{EVENTS} "EVENTS\n" (events+=eventType)*
+;
+
+eventType:
+	eventKey=ID ":" methodName=ID"("object=ID")" ";"
+;
+
+ORDER:
+	{ORDER} "ORDER\n" elements+=orderType (',' elements+=orderType)*
+;
+
+orderType:
+	elementName=ID('?')?
+;
+
+CONSTRAINTS:
+	{CONSTRAINTS} "CONSTRAINTS\n" (constraints+=constraintType)*
+;
+
+constraintType:
+	constraintName=ID "in" "{" constraints+=ID (',' constraints+=ID)* "}" 
+		("=>" keyName=ID "in" "{"keys+=ID (',' keys+=ID)*  "}")? ";"
+;

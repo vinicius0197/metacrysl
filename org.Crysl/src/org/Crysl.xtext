@@ -5,7 +5,7 @@ generate crysl "http://www.Crysl.org"
 RULESET:(elements+=Type)*;
 
 Type:
-	SPEC | OBJECTS | EVENTS
+	SPEC | OBJECTS | EVENTS | ORDER | CONSTRAINTS | ENSURES
 ;
 
 SPEC:
@@ -30,4 +30,29 @@ EVENTS:
 
 eventType:
 	eventKey=ID ":" methodName=ID"("object=ID")" ";"
+;
+
+ORDER:
+	{ORDER} "ORDER\n" elements+=orderType (',' elements+=orderType)*
+;
+
+orderType:
+	elementName=ID('?')?
+;
+
+CONSTRAINTS:
+	{CONSTRAINTS} "CONSTRAINTS\n" (constraints+=constraintType)*
+;
+
+constraintType:
+	constraintName=ID "in" "{" constraints+=STRING (',' constraints+=STRING)* "}" 
+		("=>" keyName=ID "in" "{"keys+=INT (',' keys+=INT)*  "}")? ";"
+;
+
+ENSURES:
+	{ENSURES} "ENSURES\n" (ensureElements+=ensureType)*
+;
+
+ensureType:
+	ensureName=ID "["elements+=ID (',' elements+=ID)* "]" ";"
 ;
